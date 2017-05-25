@@ -51,7 +51,7 @@ func main() {
 	server.Handle(routes)
 
 	// listen on 10389
-	go server.ListenAndServe(*host+":"+*port)
+	go server.ListenAndServe(host+":"+port)
 
 	// When CTRL+C, SIGINT and SIGTERM signal occurs
 	// Then stop server gracefully
@@ -68,12 +68,12 @@ func handleBind(w ldap.ResponseWriter, m *ldap.Message) {
 	dn := string(request.Name())
 	password := string(request.AuthenticationSimple())
 
-	log.Printf("Bind request data DN=%s, Pass=%s", dn, password)
+	log.Printf("Bind request data DN=%s", dn)
 
 	email := getEmailFromBaseDN(dn)
 
 	if "" == email {
-		log.Printf("no email in bind DN=%s, Pass=%s", dn, password)
+		log.Printf("no email in bind DN=%s", dn)
 
 		result := ldap.NewBindResponse(ldap.LDAPResultInvalidCredentials)
 		result.SetDiagnosticMessage("invalid credentials")
@@ -89,7 +89,7 @@ func handleBind(w ldap.ResponseWriter, m *ldap.Message) {
 
 		w.Write(result)
 	} else  {
-		log.Printf("Bind failed User=%s, Pass=%s", dn, password)
+		log.Printf("Bind failed User=%s", dn)
 
 		result := ldap.NewBindResponse(ldap.LDAPResultInvalidCredentials)
 		result.SetDiagnosticMessage("invalid credentials")
