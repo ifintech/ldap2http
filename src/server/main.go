@@ -180,6 +180,13 @@ func authRequest(email string, password string) bool {
 	var authResult map[string]interface{}
 	_ = json.Unmarshal(respJson, &authResult)
 
+	_, ok := authResult["retcode"]
+	if (!ok) {
+		log.Printf("error response: %s", string(respJson))
+
+		return false
+	}
+
 	var errCode = strconv.FormatFloat(authResult["retcode"].(float64), 'f', -1, 64)
 
 	return ("2000000" == errCode)
@@ -201,6 +208,13 @@ func queryUserInfoRequest(email string) map[string]interface{} {
 
 	var respData map[string]interface{}
 	_ = json.Unmarshal(respStr, &respData)
+
+	_, ok := respData["retcode"]
+	if (!ok) {
+		log.Printf("error response: %s", string(respStr))
+
+		return nil
+	}
 
 	var errCode = strconv.FormatFloat(respData["retcode"].(float64), 'f', -1, 64)
 	if "2000000" == errCode {
