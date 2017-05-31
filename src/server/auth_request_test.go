@@ -5,19 +5,40 @@ import (
 )
 
 func TestAuthRequest(t *testing.T)  {
-	auth_url = "http://php7.i.hrbbwx.com/api"
-	authResult := authRequest("xindongzhe@yahoo.com", "123456")
+	authInfos := []struct {
+		email, password string
+	}{
+		{"xindongzhe@yahoo.com", "bonjour"},
+		{"demo@yahoo.com", "123"},
+	}
 
-	if !authResult {
-		t.Errorf("error, %s", authResult);
+	auth_url = "http://php7.i.hrbbwx.com/api"
+
+	for _, infoItem := range authInfos {
+		authResult := authRequest(infoItem.email, infoItem.password)
+
+		if !authResult {
+			t.Errorf("error, %s", authResult);
+		}
 	}
 }
 
 func TestQueryUserInfoRequest(t *testing.T)  {
-	auth_url = "http://php7.i.hrbbwx.com/api"
-	authResult := queryUserInfoRequest("xindongzhe@yahoo.com")
+	emails := []struct {
+		email string
+	}{
+		{"xindongzhe@yahoo.com"},
+		{"demo@yahoo.com"},
+	}
 
-	if nil == authResult {
-		t.Errorf("error, %s", authResult);
+	auth_url = "http://php7.i.hrbbwx.com/api"
+	auth_token = "token"
+
+	for _, item := range emails {
+		userInfo := queryUserInfoRequest(item.email)
+
+		if nil == userInfo {
+			t.Errorf("error, %s", userInfo);
+		}
 	}
 }
