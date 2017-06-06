@@ -175,6 +175,7 @@ func authRequest(email string, password string) bool {
 	}
 	defer resp.Body.Close()
 
+	log.Printf("auth request %s", resp)
 	respJson, _ := ioutil.ReadAll(resp.Body)
 
 	var authResult map[string]interface{}
@@ -204,6 +205,7 @@ func queryUserInfoRequest(email string) map[string]interface{} {
 	}
 	defer resp.Body.Close()
 
+	log.Printf("query user info %s", resp)
 	respStr, _ := ioutil.ReadAll(resp.Body)
 
 	var respData map[string]interface{}
