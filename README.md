@@ -10,6 +10,14 @@
 
 ## 命令  
 
+docker启动方式：
+```bash
+构建
+docker build -t ldap .
+启动
+docker run -d --env HOST=0.0.0.0 --env PORT=10389 --env AUTH_URL=https://auth.com --env AUTH_TOKEN=demo_token --name ldap ldap
+```
+容器内部启动方式：
 ```bash
 ldap-auth -host=0.0.0.0 -port=10389 -auth_url=https://auth.com -auth_token=demo_token &
 ```
@@ -22,6 +30,7 @@ ldap-auth -host=0.0.0.0 -port=10389 -auth_url=https://auth.com -auth_token=demo_
 | port  | 监听端口 | 10389 | ldap服务监听的端口号，建议使用10389 |
 | auth_url | 统一认证授权中心服务路径 | https://127.0.0.1/ | 员工授权服务地址的倒数第二级路径，例：假设服务路径为 https://auth.com/api/auth ，则auth_url为 https://auth.com/api （去掉/auth）|
 | auth_token | 用户信息查询服务密钥 | token | 配置在统一认证授权中心conf/security/api.php文件中的ldap.password项 |
+
 
 
 ## gitlab使用
